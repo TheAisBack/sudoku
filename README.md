@@ -3,9 +3,10 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: Constraint propagation is used in the Naked Twins Strategy by looking for 2 numbers in a box that are the same two numbers in a box, which are located in a column or a row. The other boxes in these areas that have the same 2 numbers will then then be removed and the 2 numbers will be put into either or of the 2 boxes found or switched depending on if a solution is found. 
+A: Constraint propagation is used in the Naked Twins Strategy by looking for two twins, which are located in a row or column in a Sudoku puzzle. Once located these 2 twins that share the 2 same numbers will then be removed from the other boxes in the shared row or column. Once this is established, the algorithm will then calculate and figure out which box matches the correct number and print off the correct number of the twin for that box. 
 
-Q: Constraint propagation is used in the Naked Twins Strategy can be explained 
+The image below will show a detailed image on how that works.
+
 ![Naked Twin Strategy](naked-twin-strategy.png)
 
 
