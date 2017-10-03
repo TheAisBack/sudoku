@@ -5,6 +5,10 @@
 Q: How do we use constraint propagation to solve the naked twins problem?  
 A: Constraint propagation is used in the Naked Twins Strategy by looking for 2 numbers in a box that are the same two numbers in a box, which are located in a column or a row. The other boxes in these areas that have the same 2 numbers will then then be removed and the 2 numbers will be put into either or of the 2 boxes found or switched depending on if a solution is found. 
 
+Q: Constraint propagation is used in the Naked Twins Strategy can be explained 
+![naked-twin-strategy](screenshot.png)
+
+
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal Sudoku problem?  
 A: Constraint propagation is used in the Diagonal Strategy by adding the diagonal units in the unitslist, which will, therefore, be the constraints of the Sudoku. Then using the elimination, search and other functions used in the solution python, we will then find the solution for the Sudoku. 
