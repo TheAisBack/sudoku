@@ -15,13 +15,12 @@ column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123', '456', '789')]
 
 # Getting the diagonal strategy completed in Sudoku
-diagonal_1 = [a[0] + a[1] for a in zip(rows, cols)]
-diagonal_2 = [a[0] + a[1] for a in zip(rows, cols[::-1])]
-diagonals = [diagonal_1 + diagonal_2]
+diagonals = [[a + b for a,b in zip(rows, cols)], [a + b for a,b in zip(rows, reversed(cols))]]
 
 unitlist = row_units + column_units + square_units + diagonals
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
+
 
 def assign_value(values, box, value):
     """
@@ -50,15 +49,29 @@ def naked_twins(values):
     """
     # Find all instances of naked twins
     # Eliminate the naked twins as possibilities for their peers
-    
-    twins = [box for box in values.keys() if len(values[box]) == 2]
+    no_more_twins = False
 
-    for box in twins:
-        digit = values[box]
-        for peer in peers[box]:
-            if digit == values[peer]:
-                assign_value(values, twins, values[twins].replace(digit, ''))
+    while not no_more_twins:
+        board_before = values        
+        for units in unitlist:
+            # we select all the boxes which have length of their digits 2
+            twins = [box for box in values.keys() if len(values[box]) == 2]
+            for box in twins:
+                digit = values[box]
+                for peer in peers[box]:
+                    if digit == values[peer]:
+                        values[peer] = values[peer].replace(digit, '')
+                        
+            # if we have exact two matches (not triplets or more) and the values are the same then we have a naked twin
+
+                # for each box in the unit which is not one of the two naked twins remove the possible values
+
+        board_after = values
+        # if boards before and after naked twin detection are the same then there are no more twins thus we end the while loop
+        if board_before == board_after:
+            no_more_twins = True
     return values
+
 
 def grid_values(grid):
     """
