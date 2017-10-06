@@ -48,30 +48,32 @@ def naked_twins(values):
     Returns:
         the values dictionary with the naked twins eliminated from peers.
     """
-    # Find all instances of naked twins
-    # Eliminate the naked twins as possibilities for their peers
-    
     no_more_twins = False
-
+    # Loop though boxes
     while not no_more_twins:
+        # The start of selection, because we are grabbing all the sudoku values.
         board_before = values
-        twins = [box for box in values.keys() if len(values[box]) == 2]
+        # Going through the each box to see what inside, for example A1, A2, etc.
+        for units in unitlist:
+            # all boxs with 2 digits.
+            potential_twins = [box for box in values.keys() if len(values[box]) == 2]
+            #twins = sorted(int[digit_1] for _ in range(2))
             # we select all the boxes which have length of their digits 2
-        for box in twins:
-            digit = values[box]
-            for peer in peers[box]:
-                if digit == values[peer]:
-                    values[peer] = values[peer].replace(digit, '')
-            # if we have exact two matches (not triplets or more) and the values are the same then we have a naked twin
-                # for each box in the unit which is not one of the two naked twins remove the possible values
-        if len(twins) == 0:
-            return values
+            for box in potential_twins:
+                digit_1 = values[box][0]
+                digit_2 = values[box][1]
+                for peer in peers[box]:
+                    if len(values[peer])>2:
+                        if digit_1 in values[peer]:
+                            values[peer] = values[peer].replace(digit_1, '')
+                        if digit_2 in values[peer]:
+                            values[peer] = values[peer].replace(digit_2, '')
         board_after = values
-        # if boards before and after naked twin detection are the same then there are no more twins thus we end the while loop
+        # if the board_before and board_after values are now the same because we
+        # found all the naked twins.
         if board_before == board_after:
             no_more_twins = True
     return values
-
 
 def grid_values(grid):
     """

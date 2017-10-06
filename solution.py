@@ -57,15 +57,13 @@ def naked_twins(values):
             # we select all the boxes which have length of their digits 2
             twins = [box for box in values.keys() if len(values[box]) == 2]
             for box in twins:
-                digit = values[box]
+                digit_1 = values[box][0]
+                digit_2 = values[box][1]
                 for peer in peers[box]:
-                    if digit == values[peer]:
-                        values[peer] = values[peer].replace(digit, '')
-                        
-            # if we have exact two matches (not triplets or more) and the values are the same then we have a naked twin
-
-                # for each box in the unit which is not one of the two naked twins remove the possible values
-
+                    if digit_1 == values[peer]:
+                        values[peer] = values[peer].replace(digit_1)
+                    if digit_2 == values[peer]:
+                        values[peer] = values[peer].replace(digit_2)
         board_after = values
         # if boards before and after naked twin detection are the same then there are no more twins thus we end the while loop
         if board_before == board_after:
