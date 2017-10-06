@@ -1,0 +1,28 @@
+{
+    "tests": [
+        {
+            "description": "the naked_twins method applies the 'naked twins' heuristic.",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/vmuser_qopjxhtu/workspace/solution.py\", line 63, in naked_twins\n    digit_1 = values[box][0]\nIndexError: string index out of range\n",
+            "message": null,
+            "advice": null,
+            "result": "E",
+            "rubric_item_id": "5531"
+        },
+        {
+            "description": "the solve method produces a valid solution.",
+            "traceback": "",
+            "message": null,
+            "advice": null,
+            "result": ".",
+            "rubric_item_id": "5530"
+        },
+        {
+            "description": "the README has been modified.",
+            "traceback": "",
+            "message": null,
+            "advice": null,
+            "result": ".",
+            "rubric_item_id": null
+        }
+    ]
+}

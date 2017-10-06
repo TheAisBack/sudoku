@@ -12,14 +12,16 @@ boxes = cross(rows, cols)
 
 row_units = [cross(r, cols) for r in rows]
 column_units = [cross(rows, c) for c in cols]
-square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123', '456', '789')]
+square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI')
+                for cs in ('123', '456', '789')]
 
 # Getting the diagonal strategy completed in Sudoku
-diagonals = [[a + b for a,b in zip(rows, cols)], [a + b for a,b in zip(rows, reversed(cols))]]
+diagonals = [[a + b for a, b in zip(rows, cols)],
+             [a + b for a, b in zip(rows, reversed(cols))]]
 
 unitlist = row_units + column_units + square_units + diagonals
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
-peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
+peers = dict((s, set(sum(units[s], []))-set([s])) for s in boxes)
 
 
 def assign_value(values, box, value):
@@ -47,27 +49,25 @@ def naked_twins(values):
     Returns:
         the values dictionary with the naked twins eliminated from peers.
     """
-    # Find all instances of naked twins
-    # Eliminate the naked twins as possibilities for their peers
-    no_more_twins = False
-
-    while not no_more_twins:
-        board_before = values        
-        for units in unitlist:
-            # we select all the boxes which have length of their digits 2
-            twins = [box for box in values.keys() if len(values[box]) == 2]
-            for box in twins:
-                digit_1 = values[box][0]
-                digit_2 = values[box][1]
-                for peer in peers[box]:
-                    if digit_1 == values[peer]:
-                        values[peer] = values[peer].replace(digit_1)
-                    if digit_2 == values[peer]:
-                        values[peer] = values[peer].replace(digit_2)
-        board_after = values
-        # if boards before and after naked twin detection are the same then there are no more twins thus we end the while loop
-        if board_before == board_after:
-            no_more_twins = True
+    # Going through each box to see what inside, for example A1, A2, etc.
+    for unit in unitlist:
+        # Getting the potential twins
+        potential_twins = [(values[box], box) for box in unit if len(values[box]) == 2]
+        # we select all the boxes which have length of their digits 2
+        if len(potential_twins) == 2:
+            # getting one selection of potential twins
+            digit_1 = potential_twins[0]
+            digit_2 = potential_twins[1]
+            # grabbing two of the numbers.
+            digit1 = digit_1[0][0]
+            digit2 = digit_2[0][1]
+            # Are they the same.
+            if digit_1[0] == digit_2[0]:
+                for peer in unit:
+                    if len(values[peer]) > 2:
+                        # putting one number in one box and putting another number in the other.
+                        values[peer] = values[peer].replace(digit1, '')
+                        values[peer] = values[peer].replace(digit2, '')
     return values
 
 
